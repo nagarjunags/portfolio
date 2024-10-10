@@ -13,7 +13,7 @@ export default function Home() {
       <div className="flex-grow">
         <HeroSection />
         <AboutSection />
-        <ProjectsSection />
+        {/* <ProjectsSection /> */}
         <EmailSection />
       </div>
       <Footer />
