@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // This tells Next.js to treat the root directory as the base URL
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"] // This creates an alias "@" pointing to the "src" directory
     }
-  }
+  },
+  "include": ["src"], // Ensures that your "src" folder is included in the project
+  "exclude": ["node_modules"]
 }
