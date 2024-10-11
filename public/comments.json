@@ -1,44 +1,8 @@
 [
   {
-    "id": "1",
-    "user": "John Doe",
-    "content": "Great first post! Looking forward to more content.",
-    "createdAt": "2023-06-01T12:00:00Z"
-  },
-  {
-    "id": "2",
-    "user": "Jane Smith",
-    "content": "Very insightful. Thanks for sharing your thoughts!",
-    "createdAt": "2023-06-02T14:30:00Z"
-  },
-  {
     "id": "1728563557987",
     "user": "Nagarjun GS",
     "content": "hi\n",
     "createdAt": "2024-10-10T12:32:37.987Z"
-  },
-  {
-    "id": "1728564922048",
-    "user": "Nagarjuna GS",
-    "content": "yo\n",
-    "createdAt": "2024-10-10T12:55:22.048Z"
-  },
-  {
-    "id": "1728576290580",
-    "user": "Nagarjun GS",
-    "content": "good",
-    "createdAt": "2024-10-10T16:04:50.580Z"
-  },
-  {
-    "id": "1728576464354",
-    "user": "Nagarjun GS",
-    "content": "very nice",
-    "createdAt": "2024-10-10T16:07:44.354Z"
-  },
-  {
-    "id": "1728577377375",
-    "user": "Nagarjun GS",
-    "content": "a",
-    "createdAt": "2024-10-10T16:22:57.375Z"
   }
 ]

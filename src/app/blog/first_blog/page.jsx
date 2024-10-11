@@ -1,14 +1,13 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { motion } from "framer-motion";
-import { addComments } from "./actions";
 
 export default function BlogOne() {
   const { data: session } = useSession();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const adminEmail = "nagarjunags2014@gmail.com"; // Define the admin email
 
   useEffect(() => {
     fetchComments();
@@ -16,8 +15,7 @@ export default function BlogOne() {
 
   const fetchComments = async () => {
     try {
-      // Fetch comments from the API route
-      const response = await fetch("/api/comments");
+      const response = await fetch("/comments.json");
       const fetchedComments = await response.json();
       setComments(fetchedComments);
     } catch (error) {
@@ -35,48 +33,68 @@ export default function BlogOne() {
 
     if (newComment.trim() === "") return;
 
-    try {
-      const result = await addComments(newComment, session.user.name);
+    // Prepare the comment for the Perspective API
+    const perspectiveAPIKey = process.env.PERSPECTIVE_API_KEY;
+    console.log(perspectiveAPIKey);
+    const perspectiveAPIURL = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${perspectiveAPIKey}`;
 
-      if (result === "nontoxic") {
-        setNewComment("");
-        fetchComments(); // Refresh comments after successfully adding
-      } else if (result === "toxic") {
-        alert(
-          "The Comment you are trying to add seems to be inappropriate. Please be respectful and try again."
-        );
-      } else {
-        alert("Failed to add the comment. Please try again later.");
-      }
-    } catch (error) {
-      alert("Failed to add the comment. Please try again later.");
-    }
-  };
-
-  const handleDeleteComment = async (id) => {
-    if (!session || session.user.email !== adminEmail) {
-      alert("You are not authorized to delete this comment.");
-      return;
-    }
+    const perspectiveRequest = {
+      comment: {
+        text: newComment,
+      },
+      requestedAttributes: {
+        TOXICITY: {},
+      },
+    };
 
     try {
-      const response = await fetch("/api/comments", {
-        method: "DELETE",
+      // Send the comment to the Perspective API
+      const perspectiveResponse = await fetch(perspectiveAPIURL, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify(perspectiveRequest),
+      });
+
+      const perspectiveData = await perspectiveResponse.json();
+
+      const toxicityScore =
+        perspectiveData.attributeScores?.TOXICITY?.summaryScore?.value;
+
+      // Check if the comment is too toxic (you can adjust the threshold)
+      if (toxicityScore > 0.7) {
+        alert(
+          "Your comment seems inappropriate. Please revise it to be more respectful."
+        );
+        return;
+      }
+
+      // If the comment is appropriate, proceed to add it to your system
+      const newCommentObj = {
+        id: Date.now().toString(),
+        user: session.user?.name || "Anonymous",
+        content: newComment,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Post the new comment to your backend API
+      const response = await fetch("/api/comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCommentObj),
       });
 
       if (response.ok) {
-        alert("Comment deleted successfully.");
-        fetchComments(); // Refresh comments after deletion
+        setNewComment("");
+        fetchComments(); // Refresh comments after successfully adding
       } else {
-        alert("Failed to delete comment.");
+        console.error("Failed to add comment");
       }
     } catch (error) {
-      console.error("Error deleting comment:", error);
-      alert("Failed to delete comment. Please try again later.");
+      console.error("Error adding comment:", error);
     }
   };
 
@@ -102,6 +120,7 @@ export default function BlogOne() {
             to share my thoughts, experiences, and insights about web
             development, technology, and more.
           </p>
+          {/* Add more blog content here */}
         </motion.div>
 
         <motion.div
@@ -118,16 +137,6 @@ export default function BlogOne() {
               <p className="text-sm text-gray-400 mt-2">
                 {new Date(comment.createdAt).toLocaleString()}
               </p>
-
-              {/* Show delete button if the logged-in user is the admin */}
-              {session?.user?.email === adminEmail && (
-                <button
-                  onClick={() => handleDeleteComment(comment.id)}
-                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded-lg"
-                >
-                  Delete Comment
-                </button>
-              )}
             </div>
           ))}
 

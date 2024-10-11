@@ -1,49 +1,24 @@
+// src/app/api/comments/route.ts
+import { db } from "@/db/index"; // Assuming this is your Drizzle DB instance
+import { commentsTable } from "@/db/schema"; // Import the comments table schema
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+import { eq } from "drizzle-orm";
 
-// In-memory storage to use in production (since Vercel’s file system is read-only in production)
-let commentsMemoryStore = [];
-
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const newComment = await req.json();
-    const isDev = process.env.NODE_ENV === "development";
 
-    if (isDev) {
-      // For development: Use file system to store comments
-      const filePath = path.join(process.cwd(), "public", "comments.json");
+    // Insert the new comment into the database
+    await db.insert(commentsTable).values({
+      user: newComment.user,
+      content: newComment.content,
+      createdAt: new Date(),
+    });
 
-      try {
-        const fileContent = await fs.readFile(filePath, "utf-8");
-        const comments = JSON.parse(fileContent);
-
-        // Add new comment to the array
-        comments.push(newComment);
-
-        // Save the updated comments array to the file
-        await fs.writeFile(filePath, JSON.stringify(comments, null, 2));
-
-        return NextResponse.json(
-          { message: "Comment added successfully" },
-          { status: 200 }
-        );
-      } catch (error) {
-        console.error("Error writing to file:", error);
-        return NextResponse.json(
-          { error: "Failed to add comment" },
-          { status: 500 }
-        );
-      }
-    } else {
-      // For production: Use in-memory store (since file system is read-only)
-      commentsMemoryStore.push(newComment);
-
-      return NextResponse.json(
-        { message: "Comment added successfully (stored in memory)" },
-        { status: 200 }
-      );
-    }
+    return NextResponse.json(
+      { message: "Comment added successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error adding comment:", error);
     return NextResponse.json(
@@ -54,26 +29,53 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  const isDev = process.env.NODE_ENV === "development";
+  try {
+    // Fetch all comments from the database
+    const comments = await db
+      .select()
+      .from(commentsTable)
+      .orderBy(commentsTable.createdAt);
 
-  if (isDev) {
-    // For development: Load comments from file
-    const filePath = path.join(process.cwd(), "public", "comments.json");
+    return NextResponse.json(comments, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch comments" },
+      { status: 500 }
+    );
+  }
+}
 
-    try {
-      const fileContent = await fs.readFile(filePath, "utf-8");
-      const comments = JSON.parse(fileContent);
+import { getServerSession } from "next-auth"; // To check the user session
+import { authOptions } from "@/utils/authOptions"; // Assuming your auth config is in lib/auth
 
-      return NextResponse.json(comments, { status: 200 });
-    } catch (error) {
-      console.error("Error reading comments:", error);
-      return NextResponse.json(
-        { error: "Failed to load comments" },
-        { status: 500 }
-      );
-    }
-  } else {
-    // For production: Return comments from in-memory store
-    return NextResponse.json(commentsMemoryStore, { status: 200 });
+export async function DELETE(req: Request) {
+  const session = await getServerSession(authOptions);
+  const userEmail = session?.user?.email;
+
+  // Check if the user is authorized to delete comments
+  if (userEmail !== "nagarjunags2014@gmail.com") {
+    return NextResponse.json(
+      { error: "Unauthorized to delete comments" },
+      { status: 403 }
+    );
+  }
+
+  try {
+    const { id } = await req.json(); // Get the comment id from the request body
+
+    // Delete the comment from the database
+    await db.delete(commentsTable).where(eq(commentsTable.id, id));
+
+    return NextResponse.json(
+      { message: "Comment deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    return NextResponse.json(
+      { error: "Failed to delete comment" },
+      { status: 500 }
+    );
   }
 }
