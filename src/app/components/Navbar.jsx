@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import NavLink from "./NavLink";
 import { Menu, X } from "lucide-react";
 import MenuOverlay from "./MenuOverlay";
@@ -12,6 +12,10 @@ const navLinks = [
     title: "About",
     path: "#about",
   },
+  // {
+  //   title: "Projects",
+  //   path: "#projects",
+  // },
   {
     title: "Contact",
     path: "#contact",
@@ -25,36 +29,7 @@ const navLinks = [
 export default function Navbar() {
   const { data: session } = useSession(); // Access the current session
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const menuRef = useRef(null); // Create a ref for the menu
-
-  // Close the menu when clicking outside of it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setNavbarOpen(false);
-      }
-    };
-
-    // Add event listener for clicks outside the menu
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Cleanup the event listener on component unmount
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
-
-  // Function to close the menu
-  const closeMenu = () => setNavbarOpen(false);
-
-  const handleSignIn = () => {
-    signIn("google");
-    closeMenu(); // Close menu after signing in
-  };
-
-  const handleSignOut = () => {
-    signOut();
-    closeMenu(); // Close menu after signing out
-  };
+  console.log("session:", session);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-10 bg-gray-900 bg-opacity-95 text-white">
@@ -79,32 +54,24 @@ export default function Navbar() {
             </button>
           )}
         </div>
-        <div
-          ref={menuRef}
-          className="menu hidden md:block md:w-auto"
-          id="navbar"
-        >
+        <div className="menu hidden md:block md:w-auto" id="navbar">
           <ul className="flex p-4 md:p-0 md:flex-row md:space-x-8 mt-0">
             {navLinks.map((link, index) => (
               <li key={index}>
-                <NavLink
-                  href={link.path}
-                  title={link.title}
-                  onClick={closeMenu} // Close menu on link click
-                />
+                <NavLink href={link.path} title={link.title} />
               </li>
             ))}
             <li>
               {session ? (
                 <button
-                  onClick={handleSignOut} // Sign out and close menu
+                  onClick={() => signOut()}
                   className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
                 >
                   Sign Out
                 </button>
               ) : (
                 <button
-                  onClick={handleSignIn} // Sign in and close menu
+                  onClick={() => signIn("google")} // Sign in with Google
                   className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
                 >
                   Sign In
@@ -114,9 +81,7 @@ export default function Navbar() {
           </ul>
         </div>
       </div>
-      {navbarOpen ? (
-        <MenuOverlay links={navLinks} closeMenu={closeMenu} />
-      ) : null}
+      {navbarOpen ? <MenuOverlay links={navLinks} /> : null}
     </nav>
   );
 }
