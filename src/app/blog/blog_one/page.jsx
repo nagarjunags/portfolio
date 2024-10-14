@@ -134,7 +134,7 @@ export default function BlogOne() {
           transition={{ duration: 0.5 }}
           className="text-4xl mt-16 font-extrabold text-center mb-8 bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent"
         >
-          🚀 How to Become a Full Stack Developer in 2024: A Comprehensive Guide
+          🚀 How to Become a Full Stack Developer in 2024: The Path I Undergone{" "}
         </motion.h1>
 
         <motion.div
@@ -683,7 +683,6 @@ export default function BlogOne() {
           </p>
           <p className="text-xl font-bold text-center mt-8">Good luck! 🌟</p>
         </motion.div>
-
         <section className="mt-16">
           <h2 className="text-3xl font-bold mb-6">💬 Comments</h2>
           <form onSubmit={handleSubmitComment} className="mb-8">
