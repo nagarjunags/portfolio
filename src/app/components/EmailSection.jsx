@@ -55,7 +55,7 @@ export default function EmailSection() {
             </p>
             <div className="flex space-x-4">
               <Link
-                href="https://github.com"
+                href="https://github.com/nagarjunags/"
                 className="text-white hover:text-teal-400 transition-colors"
               >
                 <Github size={24} />
