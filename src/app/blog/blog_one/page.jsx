@@ -658,7 +658,7 @@ export default function BlogOne() {
             </li>
             <li>
               <a
-                href="https://www.youtube.com/watch?v=Yz4WpE1KMfk"
+                href="https://www.youtube.com/watch?v=zM9UPcIyyhQ"
                 className="text-teal-400 hover:underline"
               >
                 Hilarious Video on Interfaces and Types – Matt&apos;s Wizardry
