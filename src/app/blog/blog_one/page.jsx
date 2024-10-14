@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { addComments } from "./actions";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function BlogOne() {
@@ -37,7 +38,11 @@ export default function BlogOne() {
     if (newComment.trim() === "") return;
 
     try {
-      const result = await addComments(newComment, session.user.name);
+      const result = await addComments(
+        newComment,
+        session.user.name,
+        session.user.image
+      );
 
       if (result === "nontoxic") {
         setNewComment("");
@@ -81,23 +86,41 @@ export default function BlogOne() {
     }
   };
   console.log(comments);
+  console.log("Session:", session);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
-      <header className="bg-gray-800 py-4">
+      <header className="bg-gray-800 py-4 fixed w-full">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-teal-400">
             DevBlog
           </Link>
           <nav>
-            <ul className="flex space-x-4">
+            <ul className="flex justify-center items-center space-x-6">
               <li>
                 <Link
                   href="/"
-                  className="hover:text-teal-400 transition-colors"
+                  className="px-3 py-1 md:px-4 md:py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
                 >
                   Home
                 </Link>
+              </li>
+              <li>
+                {session ? (
+                  <button
+                    onClick={() => signOut()}
+                    className="px-3 py-1 md:px-4 md:py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
+                  >
+                    Sign Out
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => signIn("google")}
+                    className="px-3 py-1 md:px-4 md:py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
+                  >
+                    Sign In
+                  </button>
+                )}
               </li>
             </ul>
           </nav>
@@ -109,7 +132,7 @@ export default function BlogOne() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent"
+          className="text-4xl mt-16 font-extrabold text-center mb-8 bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent"
         >
           🚀 How to Become a Full Stack Developer in 2024: A Comprehensive Guide
         </motion.h1>
@@ -680,7 +703,7 @@ export default function BlogOne() {
               type="submit"
               className="px-4 py-2 bg-teal-500 text-gray-900 rounded-md hover:bg-teal-400 transition-colors"
             >
-              Submit Comment
+              {session ? "Submit Comment" : "Sign in to comment"}
             </button>
           </form>
 
@@ -690,9 +713,28 @@ export default function BlogOne() {
                 key={comment.id}
                 className="p-4 bg-gray-800 rounded-md flex justify-between items-center"
               >
-                <div>
-                  <p className="text-sm text-teal-400 mb-1">{comment.user}</p>
-                  <p className="text-gray-100">{comment.content}</p>
+                <div className="flex items-center space-x-4">
+                  {comment.profilePicture ? (
+                    <Image
+                      src={comment.profilePicture}
+                      alt={`${comment.user}'s profile`}
+                      className="w-10 h-10 rounded-full"
+                      width={300}
+                      height={300}
+                    />
+                  ) : (
+                    <Image
+                      src="/robot.png"
+                      alt={`${comment.user}'s profile`}
+                      className="w-10 h-10 rounded-full"
+                      width={300}
+                      height={300}
+                    />
+                  )}
+                  <div>
+                    <p className="text-sm text-teal-400 mb-1">{comment.user}</p>
+                    <p className="text-gray-100">{comment.content}</p>
+                  </div>
                 </div>
                 {session && session.user.email === adminEmail && (
                   <button

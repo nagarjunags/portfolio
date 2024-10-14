@@ -8,6 +8,13 @@
       "when": 1728645789597,
       "tag": "0000_new_ma_gnuci",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1728911598488,
+      "tag": "0001_clever_santa_claus",
+      "breakpoints": true
     }
   ]
 }

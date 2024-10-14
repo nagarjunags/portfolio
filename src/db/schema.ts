@@ -5,4 +5,5 @@ export const commentsTable = pgTable("comments", {
   user: varchar("user", { length: 255 }),
   content: text("content"),
   createdAt: timestamp("created_at").defaultNow(),
+  profilePicture: varchar("profilePicture", { length: 500 }),
 });

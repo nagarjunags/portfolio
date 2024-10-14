@@ -1,5 +1,9 @@
 "use server";
-export async function addComments(newComment: string, username?: string) {
+export async function addComments(
+  newComment: string,
+  username?: string,
+  image?: string
+) {
   const perspectiveAPIKey = process.env.PERSPECTIVE_API_KEY; // Replace with your Perspective API key
   const perspectiveAPIURL = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${perspectiveAPIKey}`;
 
@@ -42,7 +46,9 @@ export async function addComments(newComment: string, username?: string) {
       user: username || "Anonymous",
       content: newComment,
       createdAt: new Date().toISOString(),
+      profilePicture: image,
     };
+    console.log("Adding to database:", newCommentObj);
 
     // Use the absolute URL for the fetch request
     const response = await fetch(`${baseUrl}/api/comments`, {

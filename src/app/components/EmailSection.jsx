@@ -47,8 +47,11 @@ export default function EmailSection() {
             </h2>
             <p className="text-gray-300 mb-4 max-w-md">
               I&apos;m currently looking for new opportunities. My inbox is
-              always open. Whether you have a question or just want to say hi,
-              I&apos;ll try my best to get back to you!
+              always open. Whether you have a question or just want to say hi.
+              <br />
+              nagarjunags2014@gmail.com
+              <br />
+              Mob:+91 8618333210
             </p>
             <div className="flex space-x-4">
               <Link
@@ -58,14 +61,14 @@ export default function EmailSection() {
                 <Github size={24} />
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/nagarjuna-gs-ab59661b2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                 className="text-white hover:text-teal-400 transition-colors"
               >
                 <Linkedin size={24} />
               </Link>
             </div>
           </motion.div>
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -132,7 +135,7 @@ export default function EmailSection() {
                 </button>
               </form>
             )}
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </section>

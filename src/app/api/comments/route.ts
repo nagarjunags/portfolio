@@ -13,6 +13,7 @@ export async function POST(req: Request) {
       user: newComment.user,
       content: newComment.content,
       createdAt: new Date(),
+      profilePicture: newComment.profilePicture,
     });
 
     return NextResponse.json(

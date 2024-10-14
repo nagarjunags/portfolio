@@ -9,6 +9,9 @@ const nextConfig = {
       "@/*": ["src/*"],
     },
   },
+  images: {
+    domains: ["lh3.googleusercontent.com"], // Allow images from Google (for profile pictures)
+  },
 };
 
 module.exports = nextConfig;

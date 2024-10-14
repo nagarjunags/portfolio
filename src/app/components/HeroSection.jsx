@@ -60,12 +60,12 @@ export default function HeroSection() {
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link
+              {/* <Link
                 href="/#contact"
                 className="px-6 py-3 w-full sm:w-auto text-center rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Hire Me
-              </Link>
+              </Link> */}
               <Link
                 href="/resume.pdf"
                 className="px-6 py-3 w-full sm:w-auto text-center rounded-full bg-gray-700 hover:bg-gray-600 text-white font-medium transition duration-300 ease-in-out transform hover:scale-105"
