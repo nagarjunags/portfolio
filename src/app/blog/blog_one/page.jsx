@@ -144,18 +144,20 @@ export default function BlogOne() {
           className="prose prose-invert prose-lg max-w-none"
         >
           <p>
-            Full stack development is an exciting and highly sought-after career
-            path in the tech industry. A full stack developer works on both the
-            front-end and back-end of web applications, blending design,
-            programming, and problem-solving skills.
+            Hey there! Welcome to my first blog! 🎉 I wanted to share a bit
+            about my journey into the world of full stack development. It’s been
+            an exciting ride, diving into both the front-end and back-end of web
+            applications. I’ve been blending design, programming, and
+            problem-solving skills to create some cool projects. Let’s take a
+            look at the path I’ve been on to become a full stack developer!
           </p>
           <p>
             In 2024, full stack development requires knowledge in multiple areas
             such as responsive design, JavaScript frameworks, databases, APIs,
-            server management, testing, and more. This guide will help you
+            server management, testing, and more.I hope this path will help you
             navigate the journey to becoming a full stack developer by providing
-            a detailed roadmap along with handpicked resources for each step.
-            Ready to start? Let&apos;s go! 🌟
+            a detailed roadmap along with the resources i undergone for each
+            step. Ready to start? Let&apos;s go! 🌟
           </p>
 
           <h2 className="text-2xl font-bold mt-8 mb-4">
@@ -364,7 +366,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://www.youtube.com/watch?v=Eu35xM76kKY"
+                href="https://www.youtube.com/watch?v=FDEf3iWEgFI"
                 className="text-teal-400 hover:underline"
               >
                 JavaScript Unit Testing – YouTube
@@ -387,7 +389,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://www.youtube.com/watch?v=3RegiLAQos4"
+                href="https://www.youtube.com/watch?v=gu3FfmgkwUc"
                 className="text-teal-400 hover:underline"
               >
                 Iterators and Generators in JavaScript – YouTube
@@ -448,7 +450,7 @@ export default function BlogOne() {
             </li>
             <li>
               <a
-                href="https://www.youtube.com/playlist?list=PLhW3qG5bs-L8OlICbNXOOzsD5ymrNMEsn"
+                href="https://youtube.com/playlist?list=PL7GozF-qZ4KcpOh6FK1gsIuz49IK8RIdX&si=6ih82QQIrQlYNdYA"
                 className="text-teal-400 hover:underline"
               >
                 Postman Course Playlist – YouTube
@@ -466,7 +468,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://www.youtube.com/watch?v=IPvYjXCsTg8"
+                href="https://youtu.be/2JYT5f2isg4?si=PTB0ahrS09tDC-gL"
                 className="text-teal-400 hover:underline"
               >
                 Networking Concepts for Developers – Networking Video
@@ -513,14 +515,7 @@ export default function BlogOne() {
             This methodology helps ensure your code is reliable.
           </p>
           <ul className="list-disc list-inside mb-4">
-            <li>
-              <a
-                href="https://www.youtube.com/watch?v=Eu35xM76kKY"
-                className="text-teal-400 hover:underline"
-              >
-                TDD Tutorial – YouTube
-              </a>
-            </li>
+            <li>TDD Tutorial – YouTube</li>
           </ul>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">
