@@ -62,7 +62,7 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              {session ? (
+              {/* {session ? (
                 <button
                   onClick={() => signOut()}
                   className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
@@ -75,8 +75,8 @@ export default function Navbar() {
                   className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition duration-300 ease-in-out"
                 >
                   Sign In
-                </button>
-              )}
+                </button> */}
+              {/* )} */}
             </li>
           </ul>
         </div>
