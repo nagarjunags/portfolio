@@ -85,8 +85,6 @@ export default function BlogOne() {
       alert("Failed to delete comment. Please try again later.");
     }
   };
-  console.log(comments);
-  console.log("Session:", session);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
@@ -559,7 +557,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://reactjs.org/docs/getting-started.html"
+                href="https://youtu.be/SqcY0GlETPk?si=w5659RPBlAZV5esw"
                 className="text-teal-400 hover:underline"
               >
                 React Basics – React Official Documentation
@@ -571,7 +569,7 @@ export default function BlogOne() {
             </li>
             <li>
               <a
-                href="https://nextjs.org/docs"
+                href="https://nextjs.org/learn"
                 className="text-teal-400 hover:underline"
               >
                 Next.js Documentation – Next.js Official Docs
@@ -593,7 +591,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://tailwindcss.com/docs"
+                href="https://youtu.be/lCxcTsOHrjo?si=naF66EvlyWYvfglO"
                 className="text-teal-400 hover:underline"
               >
                 Tailwind CSS Documentation – Tailwind Official Docs
@@ -612,7 +610,7 @@ export default function BlogOne() {
           <ul className="list-disc list-inside mb-4">
             <li>
               <a
-                href="https://oauth2simplified.com/"
+                href="https://youtu.be/ysj0XNAolEc?si=sHNdwcSsKAdRgCvc"
                 className="text-teal-400 hover:underline"
               >
                 OAuth 2.0 Overview – OAuth 2.0 Simplified
